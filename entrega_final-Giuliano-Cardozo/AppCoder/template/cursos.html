@@ -1,0 +1,39 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+<main class="container">
+    <h1 class="text-center"> CURSOS </h1>
+    {% if request.user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'add_cursos' %}">Add Cursos</a>
+    {% endif %}
+    <a class="btn btn-primary" href="{% url 'buscar_cursos' %}">Buscar Cursos</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>nombre</th>
+                <th>camada</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for n in cursos %}
+            <tr>
+                <th scope="row">{{n.id}}</th>
+                <td>{{n.nombre}}</td>
+                <td>{{n.camada}}</td>
+                {% if request.user.is_authenticated %}
+                <td><a href="{% url 'elimina_curso' n.id %}" class="btn btn-outline-danger btn-sm">BORRAR</a></td>
+                <td><a href="{% url 'editar_curso' n.id %}" class="btn btn-outline-primary btn-sm">EDITAR</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</main>
+
+{% endblock %}
